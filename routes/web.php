@@ -20,12 +20,16 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 
-Route::group(['prefix' => 'merchant', 'as' => 'merchant.',], function () {
+Route::group(['prefix' => 'merchant', 'as' => 'merchant.','middleware' => 'merchant'], function () {
 
     Route::view('/', 'merchant.index')->name('index');
 
+});
+
+
+
+Route::group(['prefix' => 'merchant', 'as' => 'merchant.','middleware' => 'guest'], function () {
     Route::view('/register', 'merchant.auth.register')->name('register');
 
     Route::view('/login', 'merchant.auth.login')->name('login');
-
 });
