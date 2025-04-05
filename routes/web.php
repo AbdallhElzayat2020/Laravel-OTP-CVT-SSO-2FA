@@ -17,4 +17,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+
+
+Route::group(['prefix' => 'merchant', 'as' => 'merchant.',], function () {
+
+    Route::view('/', 'merchant.index')->name('index');
+
+});
