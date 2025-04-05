@@ -24,4 +24,8 @@ Route::group(['prefix' => 'merchant', 'as' => 'merchant.',], function () {
 
     Route::view('/', 'merchant.index')->name('index');
 
+    Route::view('/register', 'merchant.auth.register')->name('register');
+
+    Route::view('/login', 'merchant.auth.login')->name('login');
+
 });
