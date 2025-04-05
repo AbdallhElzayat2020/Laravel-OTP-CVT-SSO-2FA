@@ -27,13 +27,5 @@ Route::group(['prefix' => 'merchant', 'as' => 'merchant.','middleware' => 'merch
 });
 
 
-
-Route::group(['prefix' => 'merchant', 'as' => 'merchant.','middleware' => 'guest'], function () {
-    Route::view('/register', 'merchant.auth.register')->name('register');
-
-    Route::view('/login', 'merchant.auth.login')->name('login');
-});
-
-
 require __DIR__ . '/auth.php';
 require __DIR__ . '/merchant.php';
