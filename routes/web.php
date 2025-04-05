@@ -17,7 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+
 
 
 Route::group(['prefix' => 'merchant', 'as' => 'merchant.','middleware' => 'merchant'], function () {
@@ -33,3 +33,7 @@ Route::group(['prefix' => 'merchant', 'as' => 'merchant.','middleware' => 'guest
 
     Route::view('/login', 'merchant.auth.login')->name('login');
 });
+
+
+require __DIR__ . '/auth.php';
+require __DIR__ . '/merchant.php';
