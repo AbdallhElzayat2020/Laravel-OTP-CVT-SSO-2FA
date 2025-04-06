@@ -66,9 +66,9 @@
                         <h4 class="mb-2">Welcome to Sneat! 👋</h4>
                         <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
-                        <x-auth-session-status class="mb-4" :status="session('status')" />
+                        <x-auth-session-status class="mb-4" :status="session('status')"/>
 
-                        <form id="formAuthentication" class="mb-3"  action="{{ route('merchant.login') }}" method="post">
+                        <form id="formAuthentication" class="mb-3" action="{{ route('merchant.handle-login') }}" method="post">
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email or Username</label>
@@ -81,7 +81,7 @@
                                     placeholder="Enter your email or username"
                                     autofocus/>
                                 @error('email')
-                                    <p class="text-danger">{{ $message }}</p>
+                                <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="mb-3 form-password-toggle">

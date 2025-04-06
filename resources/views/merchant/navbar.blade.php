@@ -52,8 +52,8 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span class="fw-medium d-block">John Doe</span>
-                                    <small class="text-muted">Admin</small>
+                                    <span class="fw-medium d-block">{{Auth::guard('merchant')->user()->name}}</span>
+                                    <small class="text-muted">{{Auth::guard('merchant')->user()->email}}</small>
                                 </div>
                             </div>
                         </a>

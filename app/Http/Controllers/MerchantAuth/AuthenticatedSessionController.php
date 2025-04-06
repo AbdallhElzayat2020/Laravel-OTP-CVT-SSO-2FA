@@ -24,7 +24,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-
         $request->authenticate();
 
         $request->session()->regenerate();
@@ -42,7 +41,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-
         return to_route('merchant.login');
+//        return to_route('merchant.login');
     }
 }
