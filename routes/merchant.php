@@ -49,6 +49,8 @@ Route::middleware(['auth:merchant'])->prefix('merchant')->group(function () {
         ->middleware('throttle:6,1')
         ->name('merchant.verification.send');
 
+
+
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('merchant.password.confirm');
 

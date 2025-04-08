@@ -18,9 +18,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-
-Route::group(['prefix' => 'merchant', 'as' => 'merchant.','middleware' => 'merchant'], function () {
+Route::group(['prefix' => 'merchant', 'as' => 'merchant.', 'middleware' => ['merchant', 'merchantVerified']], function () {
 
     Route::view('/', 'merchant.index')->name('index');
 
