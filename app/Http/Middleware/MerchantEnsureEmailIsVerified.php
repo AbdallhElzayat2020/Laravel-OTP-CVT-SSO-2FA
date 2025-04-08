@@ -14,29 +14,32 @@ class MerchantEnsureEmailIsVerified
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
      */
     public static function redirectTo($route)
     {
-        return static::class.':'.$route;
+        return static::class . ':' . $route;
     }
 
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $redirectToRoute
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     * @param string|null $redirectToRoute
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse|null
      */
     public function handle($request, Closure $next, $redirectToRoute = null)
     {
-        if (! $request->user('merchant') ||
-            ($request->user('merchant') instanceof MustVerifyEmail &&
-                ! $request->user('merchant')->hasVerifiedEmail())) {
-            return $request->expectsJson()
-                ? abort(403, 'Your email address is not verified.')
-                : Redirect::guest(URL::route($redirectToRoute ?: 'merchant.verification.notice'));
+        if (config('verification.way') === 'email') {
+
+            if (!$request->user('merchant') ||
+                ($request->user('merchant') instanceof MustVerifyEmail &&
+                    !$request->user('merchant')->hasVerifiedEmail())) {
+                return $request->expectsJson()
+                    ? abort(403, 'Your email address is not verified.')
+                    : Redirect::guest(URL::route($redirectToRoute ?: 'merchant.verification.notice'));
+            }
         }
 
         return $next($request);

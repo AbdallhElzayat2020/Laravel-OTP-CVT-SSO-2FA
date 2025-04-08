@@ -35,20 +35,26 @@ Route::middleware('guest:merchant')->prefix('merchant')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('merchant.password.store');
+
 });
 
 Route::middleware(['auth:merchant'])->prefix('merchant')->group(function () {
-    Route::get('verify-email', EmailVerificationPromptController::class)
-        ->name('merchant.verification.notice');
 
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-        ->middleware(['signed', 'throttle:6,1'])
-        ->name('merchant.verification.verify');
+    /* Check for email Verification is Enabled or Not */
+    if (config('verification.way') === 'email') {
 
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-        ->middleware('throttle:6,1')
-        ->name('merchant.verification.send');
+        Route::get('verify-email', EmailVerificationPromptController::class)
+            ->name('merchant.verification.notice');
 
+        Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+            ->middleware(['signed', 'throttle:6,1'])
+            ->name('merchant.verification.verify');
+
+        Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+            ->middleware('throttle:6,1')
+            ->name('merchant.verification.send');
+
+    }
 
 
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
