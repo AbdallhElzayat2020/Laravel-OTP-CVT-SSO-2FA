@@ -70,7 +70,7 @@
                         </div>
 
                         @if (session('status') == 'verification-link-sent')
-                            <div class="mb-4 font-medium text-sm text-green-600">
+                            <div class=" alert alert-success">
                                 {{ __('A new verification link has been sent to the email address you provided during registration.') }}
                             </div>
                         @endif
@@ -78,7 +78,6 @@
                         <div class="mt-4 d-flex align-items-center justify-content-between">
                             <form method="POST" action="{{ route('merchant.verification.send') }}">
                                 @csrf
-
                                 <div>
                                     <button class="btn btn-primary" type="submit">
                                         {{ __('Resend Verification Email') }}
