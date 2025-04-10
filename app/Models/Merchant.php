@@ -34,6 +34,16 @@ class Merchant extends Authenticatable implements MustVerifyEmail
 
             $this->notify(new MerchantEmailVerification($url));
         }
+
+        if (config('verification.way') === 'cvt') {
+            $this->generateVerificationToken();
+            $url = route('merchant.verification.verify', [
+                'id' => $this->getKey(),
+                'token' => $this->verification_token,
+            ]);
+
+            $this->notify(new MerchantEmailVerification($url));
+        }
     }
 
     /* Custom  Verification token */

@@ -31,7 +31,7 @@ class MerchantEnsureEmailIsVerified
      */
     public function handle($request, Closure $next, $redirectToRoute = null)
     {
-        if (config('verification.way') === 'email') {
+        if (config('verification.way') === 'email' || config('verification.way') === 'cvt') {
 
             if (!$request->user('merchant') ||
                 ($request->user('merchant') instanceof MustVerifyEmail &&
