@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class Merchant extends Authenticatable implements MustVerifyEmail
 {
@@ -19,8 +20,6 @@ class Merchant extends Authenticatable implements MustVerifyEmail
 
 
     // custom Notification for Merchant
-
-
     public function sendEmailVerificationNotification()
     {
         if (config('verification.way') === 'email') {
@@ -34,6 +33,27 @@ class Merchant extends Authenticatable implements MustVerifyEmail
             );
 
             $this->notify(new MerchantEmailVerification($url));
+        }
+    }
+
+    /* Custom  Verification token */
+
+    public function generateVerificationToken()
+    {
+        if (config('verification.way') === 'cvt') {
+            $this->verification_token = Str::random(40);
+            $this->verification_token_expires_at = now()->addMinutes(30);
+            $this->save();
+        }
+    }
+
+    public function VerifyUsingVerificationToken()
+    {
+        if (config('verification.way') === 'cvt') {
+            $this->email_verified_at = now();
+            $this->verification_token = null;
+            $this->verification_token_expires_at = null;
+            $this->save();
         }
     }
 
