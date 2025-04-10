@@ -17,7 +17,7 @@ class CustomVerificationTokenController extends Controller
             : view('merchant.auth.verify-email');
     }
 
-    public function verify(Request $request)
+    public function verify(Request $request): RedirectResponse
     {
         if ($request->user('merchant')->hasVerifiedEmail()) {
             return redirect()->intended(route('merchant.index', absolute: false) . '?verified=1');
@@ -30,7 +30,7 @@ class CustomVerificationTokenController extends Controller
         return redirect()->intended(route('merchant.index', absolute: false) . '?verified=1');
     }
 
-    public function resend(Request $request)
+    public function resend(Request $request): RedirectResponse
     {
         if ($request->user('merchant')->hasVerifiedEmail()) {
             return redirect()->intended(route('merchant.index', absolute: false));

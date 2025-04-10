@@ -25,7 +25,6 @@ Route::middleware('guest:merchant')->prefix('merchant')->group(function () {
 
     Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('merchant.handle-login');
 
-
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('merchant.password.request');
 
@@ -39,6 +38,7 @@ Route::middleware('guest:merchant')->prefix('merchant')->group(function () {
         ->name('merchant.password.store');
 
 });
+
 
 Route::middleware(['auth:merchant'])->prefix('merchant')->group(function () {
 
@@ -84,6 +84,5 @@ Route::middleware(['auth:merchant'])->prefix('merchant')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('merchant.logout');
-
 
 });
