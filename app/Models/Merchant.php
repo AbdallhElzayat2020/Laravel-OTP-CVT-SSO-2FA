@@ -52,7 +52,7 @@ class Merchant extends Authenticatable implements MustVerifyEmail
     {
         if (config('verification.way') === 'cvt') {
             $this->verification_token = Str::random(40);
-            $this->verification_token_expires_at = now()->addMinutes(30);
+            $this->verification_token_expires_at = now()->addMinutes(1);
             $this->save();
         }
     }
