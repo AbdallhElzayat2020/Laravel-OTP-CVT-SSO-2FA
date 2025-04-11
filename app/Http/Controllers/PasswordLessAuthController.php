@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Merchant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class PasswordLessAuthController extends Controller
@@ -35,8 +36,9 @@ class PasswordLessAuthController extends Controller
         return back()->with('status', 'Link sent to your email, please check your Email');
     }
 
-    public function verify()
+    public function verify($merchant)
     {
-        
+        Auth::guard('merchant')->loginUsingId($merchant);
+        return to_route('merchant.index');
     }
 }
