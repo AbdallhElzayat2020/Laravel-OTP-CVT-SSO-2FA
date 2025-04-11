@@ -12,6 +12,7 @@ use App\Http\Controllers\MerchantAuth\PasswordResetLinkController;
 use App\Http\Controllers\MerchantAuth\RegisteredUserController;
 use App\Http\Controllers\MerchantAuth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PasswordLessAuthController;
 
 Route::middleware('guest:merchant')->prefix('merchant')->group(function () {
 
@@ -23,7 +24,15 @@ Route::middleware('guest:merchant')->prefix('merchant')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('merchant.login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('merchant.handle-login');
+    if (config('verification.way') === 'password_less') {
+        Route::post('login', [PasswordLessAuthController::class, 'store'])->name('merchant.handle-login');
+        Route::get('verify-email/{merchant}', [PasswordLessAuthController::class, 'verify'])
+            ->middleware(['throttle:6,1', 'signed'])
+            ->name('merchant.login.verify');
+    } else {
+
+        Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('merchant.handle-login');
+    }
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('merchant.password.request');
