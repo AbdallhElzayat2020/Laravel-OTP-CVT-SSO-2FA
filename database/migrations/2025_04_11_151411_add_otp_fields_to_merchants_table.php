@@ -11,9 +11,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('merchants', function (Blueprint $table) {
-            $table->after('verification_token', function () use ($table) {
-                $table->string('phone')->nullable()->after('email');
-                $table->timestamp('otp')->nullable()->after('verification_token');
+            $table->after('verification_token_expires_at', function () use ($table) {
+                $table->string('phone')->nullable();
+                $table->string('otp')->nullable();
+                $table->timestamp('otp_expires_at')->nullable();
             });
         });
     }

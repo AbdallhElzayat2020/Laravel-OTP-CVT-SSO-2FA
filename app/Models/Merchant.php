@@ -19,7 +19,8 @@ class Merchant extends Authenticatable implements MustVerifyEmail
     use Notifiable;
 
 
-    // custom Notification for Merchant
+    /* custom Notification for Merchant  */
+
     public function sendEmailVerificationNotification()
     {
         if (config('verification.way') === 'email') {
@@ -59,7 +60,6 @@ class Merchant extends Authenticatable implements MustVerifyEmail
     }
 
     /* Custom  Verification token */
-
     public function generateVerificationToken()
     {
         if (config('verification.way') === 'cvt') {
@@ -75,6 +75,26 @@ class Merchant extends Authenticatable implements MustVerifyEmail
             $this->email_verified_at = now();
             $this->verification_token = null;
             $this->verification_token_expires_at = null;
+            $this->save();
+        }
+    }
+
+    /*  Otp Verification  */
+
+    public function generateOtp()
+    {
+        if (config('verification.way') === 'otp') {
+            $this->otp = random_int(000000, 999999);
+            $this->otp_expires_at = now()->addMinutes(10);
+            $this->save();
+        }
+    }
+
+    public function restOtp()
+    {
+        if (config('verification.way') === 'otp') {
+            $this->otp = null;
+            $this->otp_expires_at = null;
             $this->save();
         }
     }
