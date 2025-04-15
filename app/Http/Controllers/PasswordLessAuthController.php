@@ -13,7 +13,6 @@ class PasswordLessAuthController extends Controller
     public function store(Request $request)
     {
 
-
         // validate
         $request->validate([
             'email' => ['required', 'email', 'max:255'],

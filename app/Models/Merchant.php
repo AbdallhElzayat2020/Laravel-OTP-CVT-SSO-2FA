@@ -14,10 +14,8 @@ use Illuminate\Support\Str;
 class Merchant extends Authenticatable implements MustVerifyEmail
 {
 
-
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use Notifiable;
-
 
     /* custom Notification for Merchant  */
 
@@ -79,8 +77,7 @@ class Merchant extends Authenticatable implements MustVerifyEmail
         }
     }
 
-    /*  Otp Verification  */
-
+    /*  Otp Verification Generaye  */
     public function generateOtp()
     {
         if (config('verification.way') === 'otp') {

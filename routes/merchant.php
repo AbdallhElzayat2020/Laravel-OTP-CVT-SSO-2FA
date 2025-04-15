@@ -13,7 +13,7 @@ use App\Http\Controllers\MerchantAuth\RegisteredUserController;
 use App\Http\Controllers\MerchantAuth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasswordLessAuthController;
-
+use App\Http\Controllers\OtpController;
 Route::middleware('guest:merchant')->prefix('merchant')->group(function () {
 
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -29,6 +29,9 @@ Route::middleware('guest:merchant')->prefix('merchant')->group(function () {
         Route::get('verify-email/{merchant}', [PasswordLessAuthController::class, 'verify'])
             ->middleware(['throttle:6,1', 'signed'])
             ->name('merchant.login.verify');
+    } elseif (config('verification.way') === 'otp'){
+        Route::post('login', [OtpController::class, 'store'])->name('merchant.handle-login');
+        Route::post('verify-otp', [OtpController::class, 'verify'])->name('merchant.verify-otp');
     } else {
 
         Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('merchant.handle-login');
