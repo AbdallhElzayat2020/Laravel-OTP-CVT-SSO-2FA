@@ -69,15 +69,15 @@
 
                         <form id="formAuthentication" class="mb-3" action="{{ route('merchant.verify-otp') }}" method="post">
                             @csrf
-                            <input type="hidden" name="otp" value="{{$email}}">
+                            <input type="hidden" name="email" value="{{$email}}">
+
                             <div class="mb-3">
-                                <label for="email" class="form-label">OTP</label>
+                                <label for="otp" class="form-label">OTP</label>
                                 <input
                                         type="text"
                                         class="form-control"
                                         id="otp"
                                         name="otp"
-                                        value="{{old('otp')}}"
                                         placeholder="Enter your OTP"
                                         autofocus/>
                                 @error('otp')
