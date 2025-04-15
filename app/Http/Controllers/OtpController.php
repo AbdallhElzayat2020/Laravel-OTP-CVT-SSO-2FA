@@ -51,7 +51,7 @@ class OtpController extends Controller
         // if not exists return error
         if (!$merchant) {
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'otp' => 'Expired OTP',
             ]);
         }
 
@@ -63,7 +63,7 @@ class OtpController extends Controller
                 return to_route('merchant.index');
             }
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'Expired OTP',
             ]);
         }
     }

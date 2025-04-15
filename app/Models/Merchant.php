@@ -82,7 +82,7 @@ class Merchant extends Authenticatable implements MustVerifyEmail
     {
         if (config('verification.way') === 'otp') {
             $this->otp = random_int(000000, 999999);
-            $this->otp_expires_at = now()->addMinutes(10);
+            $this->otp_expires_at = now()->addMinutes(1);
             $this->save();
         }
     }
